@@ -388,7 +388,7 @@ class Keyboard {
     this.keyboard = keyboardElement;
     this.keyboard.classList.add('keyboard');
     this.textarea = textareaElement;
-    this.isKeyDown = false;
+    this.isKeyDownByMouse = false;
     this.isCapsLock = false;
     this.layout = localStorage.getItem('alex-m-lang') === 'ru' ? 'ru' : 'en';
     this.keys = [];
@@ -449,6 +449,7 @@ class Keyboard {
       else if (selectionStart > 0) selectionStart -= 1;
     }
     this.textarea.setRangeText('', selectionStart, selectionEnd, 'end');
+    this.textarea.scrollTop = this.textarea.scrollHeight;
   }
 
   insertChar(char) {
@@ -456,6 +457,7 @@ class Keyboard {
     const { selectionEnd } = this.textarea;
 
     this.textarea.setRangeText(char, selectionStart, selectionEnd, 'end');
+    this.textarea.scrollTop = this.textarea.scrollHeight;
   }
 
   keyDownEventHandler(event) {
@@ -493,9 +495,28 @@ class Keyboard {
     }
   }
 
+  mouseDownEventHandler(event) {
+    const keyboardEvent = new KeyboardEvent('keydown', { code: event.target.id });
+
+    document.dispatchEvent(keyboardEvent);
+    this.isKeyDownByMouse = true;
+  }
+
+  mouseUpEventHandler(event) {
+    const keyboardEvent = new KeyboardEvent('keyup', { code: event.target.id });
+
+    document.dispatchEvent(keyboardEvent);
+    this.isKeyDownByMouse = false;
+  }
+
   setupEventHandlers() {
     document.addEventListener('keydown', (event) => this.keyDownEventHandler(event));
     document.addEventListener('keyup', (event) => this.keyUpEventHandler(event));
+    document.addEventListener('mousedown', (event) => this.mouseDownEventHandler(event));
+    document.addEventListener('mouseup', (event) => this.mouseUpEventHandler(event));
+    document.addEventListener('mouseout', (event) => {
+      if (this.isKeyDownByMouse) this.mouseUpEventHandler(event);
+    });
   }
 }
 
