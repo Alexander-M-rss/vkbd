@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+
+:root {
+  --background: #0D1117;
+  --text-color: #C9D1D9;
+  --textarea-color: #161b22;
+  --textarea-background: #8A939C;
+  --keyboard: #8A939C;
+  --key: #161b22;
+  --key-text: #C9D1D9;
+  --key-hover: rgba(114,177,101,0.8);
+
+  --key-active: rgb(2, 177, 90);
+
+}
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  transition: .2s;
+  color: var(--text-color);
+  background-color: var(--background);
+}
+
+.container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container h1, p {
+ margin:10px auto;
+ text-align: center
+}
+
+.container p {
+  font-size: 24px;
+}
+
+.text {
+  width: 830px;
+  height: 280px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  resize: none;
+  word-break: break-all;
+  color: var(--textarea-color);
+  background-color: var(--textarea-background);
+  outline: none;
+  border: none;
+  font-size: 20px;
+}
+
+.text::-webkit-scrollbar {
+    width: 10px;
+    background-color: var(--key);
+    border-color: var(--text-color);
+}
+
+.text::-webkit-scrollbar {
+    border-color: var(--key);
+}
+
+.text::-webkit-scrollbar-thumb {
+    background-color: var(--text-color);
+    transition: 0.3s;
+}
+
+.text::-webkit-scrollbar-thumb:hover {
+    background-color: white;
+}
+
+.text::-webkit-scrollbar-button:vertical:start:decrement {
+    background: linear-gradient(120deg, var(--text-color) 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(240deg, var(--text-color) 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(0deg, var(--text-color) 30%, rgba(0, 0, 0, 0) 31%);
+    background-color: var(--key);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.text::-webkit-scrollbar-button:vertical:start:decrement:hover {
+    background-color: white;
+}
+
+.text::-webkit-scrollbar-button:vertical:end:increment {
+    background: linear-gradient(300deg, var(--text-color) 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(60deg, var(--text-color) 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(180deg, var(--text-color) 30%, rgba(0, 0, 0, 0) 31%);
+    background-color: var(---key);
+}
+
+.text::-webkit-scrollbar-button:vertical:end:increment:hover {
+    background-color: white;
+}
+
+.keyboard {
+  padding: 5px;
+  border-radius: 5px;
+  background: var(--keyboard);
+  display: grid;
+  grid-template-columns: repeat(15, 50px);
+  grid-auto-rows: 50px;
+  gap: 5px;
+  grid-template-areas:
+    ".. .. .. .. .. .. .. .. .. .. .. .. .. bs bs"
+    ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .."
+    "ca ca .. .. .. .. .. .. .. .. .. .. .. en en"
+    "sl sl .. .. .. .. .. .. .. .. .. .. .. sr sr"
+    "cl cl .. sp sp sp sp sp sp sp .. .. .. .. ..";
+}
+
+.key {
+  color: var(--key-text);
+  background: var(--key);
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.func {
+  background-color: var(--background);
+}
+
+.key:hover {
+  background-color: var(--key-hover);
+}
+
+.key.active {
+  border-radius: 50px;
+  background-color:var(--key-active);
+}
+
+.Backspace {
+  grid-area: bs;
+}
+
+.CapsLock {
+  grid-area: ca;
+}
+
+.Enter {
+  grid-area: en;
+}
+
+.ShiftLeft {
+  grid-area: sl;
+}
+
+.ShiftRight {
+  grid-area: sr;
+}
+
+.ControlLeft {
+  grid-area: cl
+}
+
+.Space {
+  grid-area: sp;
+  background-color: var(--key);
+}
