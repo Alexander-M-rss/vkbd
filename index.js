@@ -465,8 +465,10 @@ class Keyboard {
 
     if (key) {
       event.preventDefault();
+      let isShiftActive = document.getElementById('ShiftLeft').classList.contains('active');
+      isShiftActive = isShiftActive || document.getElementById('ShiftRight').classList.contains('active');
       key.classList.add('active');
-      if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && !event.repeat) this.shiftKeys();
+      if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && !event.repeat && !isShiftActive) this.shiftKeys();
       else if (event.code === 'CapsLock' && !event.repeat) {
         this.shiftKeys(true);
         if (this.isCapsLock) key.classList.remove('active');
@@ -490,7 +492,12 @@ class Keyboard {
     const key = document.getElementById(event.code);
 
     if (key) {
-      if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') this.shiftKeys();
+      if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && key.classList.contains('active')) {
+        document.getElementById('ShiftLeft').classList.remove('active');
+        document.getElementById('ShiftRight').classList.remove('active');
+        this.shiftKeys();
+        return;
+      }
       if (event.code !== 'CapsLock') key.classList.remove('active');
     }
   }
@@ -529,7 +536,7 @@ const keyboardObj = new Keyboard(keyboard, textarea);
 
 keyboardObj.init(keysLayout);
 title.textContent = 'RSS Виртуальная клавиатура';
-about.innerText = 'Клавиатура создана в операционной системе Linux\nДля переключения языка комбинация: Ctrl + Alt';
+about.innerText = 'Клавиатура создана в операционной системе Windows\nДля переключения языка комбинация: Ctrl + Alt';
 container.classList.add('container');
 textarea.classList.add('text');
 container.append(title, textarea, keyboard, about);
